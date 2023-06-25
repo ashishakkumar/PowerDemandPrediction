@@ -6,4 +6,4 @@ numpy==1.22.0
 scikit-learn==1.1
 tensorflow-cpu==2.10.1
 xgboost==1.5.1
-plotly.express==0.5.0
+plotly.express==0.4.1
