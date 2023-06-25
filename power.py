@@ -25,7 +25,7 @@ def load_model_custom_objects(url):
     urllib.request.urlretrieve(url, filename)
 
     # Load the model
-    model = tf.keras.models.load_model(filename)
+    model = tf.keras.models.load_model(filename, custom_objects={'CustomAdam': CustomAdam})
     return model
 
 # URL for the model file
