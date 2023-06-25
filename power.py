@@ -17,7 +17,7 @@ urllib.request.urlretrieve(url, filename)
 
 # Load the model
 
-multivariate_lstm = tf.keras.models.load_model('multivariate_lstm.h5')
+multivariate_lstm = tf.keras.models.load_model('multivariate_lstm.h5',compile = False)
 
 
 
