@@ -16,6 +16,12 @@ url = "https://github.com/ashishakkumar/PowerDemandPrediction/raw/main/multivari
 filename = "multivariate_lstm.h5"
 urllib.request.urlretrieve(url, filename)
 
+class CustomAdam(tf.keras.optimizers.Adam):
+    pass
+
+# Register the custom optimizer
+tf.keras.utils.get_custom_objects()['CustomAdam'] = CustomAdam
+
 def load_model():
     # Load the model
     multivariate_lstm = tf.keras.models.load_model(filename)
