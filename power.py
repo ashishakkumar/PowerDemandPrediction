@@ -17,7 +17,7 @@ urllib.request.urlretrieve(url, filename)
 
 # Load the model
 
-multivariate_lstm = tf.keras.models.load_model(filename, custom_objects={'CustomAdam': CustomAdam})
+multivariate_lstm = tf.keras.models.load_model(filename)
 
 
 
