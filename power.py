@@ -17,7 +17,7 @@ urllib.request.urlretrieve(url, filename)
 
 # Load the model
 
-multivariate_lstm = tf.keras.models.load_model('multivariate_lstm.h5', compile=False)
+multivariate_lstm = tf.keras.models.load_model('multivariate_lstm.h5')
 
 
 
@@ -124,8 +124,7 @@ def main():
                   lambda epoch: 1e-4 * 10 ** (epoch / 10))
     early_stopping = tf.keras.callbacks.EarlyStopping(patience=10)
 
-    # Load the model
-    multivariate_lstm = load_model()
+
 
     y_test = y_test.reshape(-1, 1)
     y_test_inv = scaler_y.inverse_transform(y_test)
