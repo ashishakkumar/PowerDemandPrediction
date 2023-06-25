@@ -16,7 +16,9 @@ filename = "multivariate_lstm.h5"
 urllib.request.urlretrieve(url, filename)
 
 # Load the model
-model = tf.keras.models.load_model(filename)
+
+multivariate_lstm = tf.keras.models.load_model(filename, custom_objects={'CustomAdam': CustomAdam})
+
 
 
 def multivariate_data(dataset, target, start_index, end_index, history_size,
