@@ -9,18 +9,31 @@ import urllib.request
 from math import sqrt
 from sklearn.metrics import mean_squared_error
 import plotly.express as px
+import urllib.request
 
+# Define the custom optimizer
+class CustomAdam(tf.keras.optimizers.Adam):
+    pass
 
-# Download the model file
-url = "https://github.com/ashishakkumar/PowerDemandPrediction/raw/main/multivariate_lstm.h5"
-filename = "multivariate_lstm.h5"
-urllib.request.urlretrieve(url, filename)
+# Load the model using the custom loading function
+def load_model_custom_objects(url):
+    # Register the custom optimizer
+    tf.keras.utils.get_custom_objects()['CustomAdam'] = CustomAdam
 
+    # Download the model file
+    filename = 'multivariate_lstm.h5'
+    urllib.request.urlretrieve(url, filename)
 
-def load_model():
     # Load the model
-    multivariate_lstm = tf.keras.models.load_model(url)
-    return multivariate_lstm
+    model = tf.keras.models.load_model(filename)
+    return model
+
+# URL for the model file
+model_url = 'https://github.com/ashishakkumar/PowerDemandPrediction/raw/main/multivariate_lstm.h5'
+
+# Load the model from the URL
+multivariate_lstm = load_model_custom_objects(model_url)
+
 
 def multivariate_data(dataset, target, start_index, end_index, history_size,
                       target_size, step, single_step=False):
