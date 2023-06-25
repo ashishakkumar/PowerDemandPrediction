@@ -24,7 +24,7 @@ tf.keras.utils.get_custom_objects()['CustomAdam'] = CustomAdam
 
 def load_model():
     # Load the model
-    multivariate_lstm = tf.keras.models.load_model(filename)
+    multivariate_lstm = tf.keras.models.load_model(filename, custom_objects={'CustomAdam': CustomAdam})
     return multivariate_lstm
 
 def multivariate_data(dataset, target, start_index, end_index, history_size,
