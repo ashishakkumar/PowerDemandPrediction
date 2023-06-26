@@ -10,12 +10,27 @@ from math import sqrt
 from sklearn.metrics import mean_squared_error
 import plotly.express as px
 import urllib.request
-
+import datetime
 url = "https://github.com/ashishakkumar/PowerDemandPrediction/raw/main/multivariate_lstm.h5"
 filename = "multivariate_lstm.h5"
 urllib.request.urlretrieve(url, filename)
 
-# Load the model
+
+page_bg_img = f"""
+<style>
+[data-testid="stAppViewContainer"] > .main {{
+background-image: url("https://cdn.britannica.com/12/156712-131-8E29225D/transmission-lines-electricity-countryside-power-plants-homes.jpg");
+background-size: cover;
+background-filter: blur(50px);
+}}
+</style>
+"""
+
+st.markdown(page_bg_img, unsafe_allow_html=True)
+
+
+
+
 
 multivariate_lstm = tf.keras.models.load_model('multivariate_lstm.h5',compile = False)
 
@@ -44,13 +59,27 @@ def multivariate_data(dataset, target, start_index, end_index, history_size,
     return np.array(data), np.array(labels)
 
 def main():
-    st.set_page_config(
-        page_title="Power Demand Prediction",
-        layout='wide'
+
+
+    st.title(':black[Power Demand Prediction]')
+    current_date = datetime.date.today()
+
+    st.markdown("_Tips : Click on the same date twice in the calendar interface to see the prediction for single day_")
+
+    selected_date = st.date_input(
+        "Select a date for prediction",
+        value=(current_date, current_date),
+        min_value=current_date,
+        max_value=current_date + datetime.timedelta(days=365)
     )
 
-    st.title('Power Demand Prediction')
-    selected_date = st.date_input("Select a date for prediction")
+    if isinstance(selected_date, tuple):
+        start_date, end_date = selected_date
+    else:
+        start_date, end_date = selected_date, selected_date
+
+    st.markdown(f"You have selected: **{start_date}** to **{end_date}** for prediction.")
+
     merged_df = pd.read_csv("https://raw.githubusercontent.com/ashishakkumar/PowerDemandPrediction/main/ap_dataset/APDATA.csv",
                             parse_dates=True)
     merged_df["Date"] = pd.to_datetime(merged_df["Date"])
