@@ -64,13 +64,10 @@ def main():
     weather_df["Date"] = pd.to_datetime(weather_df["Date"])
     merged_df = pd.merge(merged_df, weather_df, on='Date', how='inner')
     merged_df.drop(["rain", "temp"], axis=1, inplace=True)
-    merged_df = merged_df.set_index("Date")
-    merged_df.index = pd.date_range(start=merged_df.index[0], periods=len(merged_df), freq='D')
 
 
-    fig = px.line(merged_df, x=merged_df.index, y="Energy Required (MU)")
-    fig.update_xaxes(tickangle=90)
-    st.plotly_chart(fig)
+    st.line_chart(merged_df, x="Date", y="Energy Required (MU)",use_container_width=True)
+ 
     columns = ['Energy Required (MU)', 'Rain', 'Tmax', 'Tmin', 'inflation', 'Day']
     merged_df = merged_df.loc[:, columns]
 
@@ -149,4 +146,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
