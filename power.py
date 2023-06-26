@@ -19,7 +19,7 @@ urllib.request.urlretrieve(url, filename)
 page_bg_img = f"""
 <style>
 [data-testid="stAppViewContainer"] > .main {{
-background-image: url("https://cdn.britannica.com/12/156712-131-8E29225D/transmission-lines-electricity-countryside-power-plants-homes.jpg");
+background-image: url("https://raw.githubusercontent.com/ashishakkumar/PowerDemandPrediction/main/340966496_570385771749371_2312951338874449866_n%20(1).jpg");
 background-size: cover;
 background-filter: blur(50px);
 }}
