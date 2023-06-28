@@ -11,7 +11,7 @@ from sklearn.metrics import mean_squared_error
 import plotly.express as px
 import urllib.request
 import datetime
-url = "https://github.com/ashishakkumar/PowerDemandPrediction/blob/main/multivariate_lstm2.h5"
+url = "https://github.com/ashishakkumar/PowerDemandPrediction/raw/main/multivariate_lstm2.h5"
 filename = "multivariate_lstm.h5"
 urllib.request.urlretrieve(url, filename)
 
