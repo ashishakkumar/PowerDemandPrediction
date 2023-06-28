@@ -11,6 +11,7 @@ from sklearn.metrics import mean_squared_error
 import plotly.express as px
 import urllib.request
 import datetime
+
 url = "https://github.com/ashishakkumar/PowerDemandPrediction/raw/main/multivariate_lstm2.h5"
 filename = "multivariate_lstm.h5"
 urllib.request.urlretrieve(url, filename)
@@ -77,11 +78,11 @@ def main():
         value=(last_date, last_date)
        
     )
-
-    if isinstance(selected_date, tuple):
-        start_date, end_date = selected_date
-    else:
-        start_date, end_date = selected_date, selected_date
+    if selected_date is not None:
+        if isinstance(selected_date, tuple):
+            start_date, end_date = selected_date
+        else:
+            start_date, end_date = selected_date, selected_date
      
 
     start_date = datetime.datetime.strptime(str(start_date), "%Y-%m-%d").date()
@@ -103,9 +104,15 @@ def main():
     weather_df["Date"] = pd.to_datetime(weather_df["Date"])
     merged_df = pd.merge(merged_df, weather_df, on='Date', how='inner')
     merged_df.drop(["rain", "temp"], axis=1, inplace=True)
-
-
-    st.line_chart(merged_df, x="Date", y="Energy Required (MU)",use_container_width=True)
+    
+    light_colors = ['#F5F5F5', '#F0FFFF', '#F5FFFA', '#FAFAD2', '#F0FFF0', '#FFF5EE', '#F5F5DC', '#FAF0E6', '#F0E68C', '#FFFACD']
+    
+    fig = px.line(data_frame=merged_df, x="Date", y="Energy Required (MU)", title="Energy Demand (MU) trend till Date")
+    fig.update_xaxes(gridcolor="lightgray", gridwidth=0.5)
+    fig.update_yaxes(gridcolor="lightgray", gridwidth=0.5)
+    fig.update_layout(plot_bgcolor=light_colors[np.random.randint(0, 9)],paper_bgcolor = '#36454F')
+    st.plotly_chart(fig, use_container_width=True) 
+    # st.line_chart(merged_df, x="Date", y="Energy Required (MU)",use_container_width=True)
  
     columns = ['Energy Required (MU)', 'Rain', 'Tmax', 'Tmin', 'inflation', 'Day']
     merged_df = merged_df.loc[:, columns]
@@ -160,7 +167,7 @@ def main():
     test_forecast = multivariate_lstm.predict(X_test)
     lstm_forecast = scaler_y.inverse_transform(test_forecast)
     rmse_lstm = sqrt(mean_squared_error(y_test_inv, lstm_forecast))
-    st.write(f"RMSE of day ahead power demand LSTM forecast: {round(rmse_lstm, 3)}")
+    st.write(f"RMSE of model under use for LSTM forecast of next 30 days: {round(rmse_lstm, 3)}")
 
     train_forecast = multivariate_lstm.predict(X_train)
     train_forecast_inverse = scaler_y.inverse_transform(train_forecast)
@@ -180,8 +187,34 @@ def main():
 
     # Add the Date column to the DataFrame
     df['Date'] = date_range
+    df["Date"] = pd.to_datetime(df["Date"])
     df['Forecasted Demand (MU)'] = forecast_unseen_inverse[(start_date-last_date).days:(end_date-last_date).days+1]
-    st.bar_chart(data=df, x='Date', y='Forecasted Demand (MU)')
+    fig = px.bar(df, x='Date', y='Forecasted Demand (MU)')
+    fig.update_layout(paper_bgcolor = '#36454F',plot_bgcolor=light_colors[np.random.randint(0, 9)])
+    # Render the chart using Streamlit
+    if selected_date is not None:
+        st.plotly_chart(fig)
+    with st.container():
+        # Show the dataframe in Streamlit
+
+        
+        st.dataframe(df.style.set_properties(**{'background-color': 'lightblue', 'color': 'black'}))  # Set custom background and text color
+
+
+        # Convert the dataframe to CSV format
+        
+        def convert_df(df):
+            return df.to_csv(index=False).encode('utf-8')
+
+        csv = convert_df(df)
+
+        # Add a download button for the dataframe
+        st.download_button(
+            label="Download Prediction as CSV File",
+            data=csv,
+            file_name='df.csv',
+            mime='text/csv',
+        )
 
 if __name__ == "__main__":
     main()
