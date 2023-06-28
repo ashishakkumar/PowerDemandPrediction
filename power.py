@@ -19,8 +19,8 @@ urllib.request.urlretrieve(url, filename)
 
 with st.sidebar : 
     st.image('https://scontent.fmaa8-1.fna.fbcdn.net/v/t39.30808-6/277737201_348161497339226_4233154437252459558_n.png?_nc_cat=104&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=gmhLb771LQoAX-oBWp_&_nc_ht=scontent.fmaa8-1.fna&oh=00_AfBSA8btYseH5Y7FUDLPiwgs2Ie0m_9PQ86Di1XjxZHJEA&oe=64A25406')
-    st.title("Power Demand Prediction")
-    st.info("This application allows you to predict the total power demand (in MU) of Andhra Pradesh")
+    st.title("Power Demand Prediction (AI4ICPS)")
+    st.info("This application allows you to predict the total electricity demand (in Million Units) for Andhra Pradesh")
 
 
 page_bg_img = f'''
