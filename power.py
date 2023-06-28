@@ -11,7 +11,7 @@ from sklearn.metrics import mean_squared_error
 import plotly.express as px
 import urllib.request
 import datetime
-
+st.set_page_config(layout="wide")
 url = "https://github.com/ashishakkumar/PowerDemandPrediction/raw/main/multivariate_lstm2.h5"
 filename = "multivariate_lstm.h5"
 urllib.request.urlretrieve(url, filename)
@@ -111,7 +111,9 @@ def main():
     fig.update_xaxes(gridcolor="lightgray", gridwidth=0.5)
     fig.update_yaxes(gridcolor="lightgray", gridwidth=0.5)
     fig.update_layout(plot_bgcolor=light_colors[np.random.randint(0, 9)],paper_bgcolor = '#36454F')
+    fig.update_layout(margin=dict(r=25))
     st.plotly_chart(fig, use_container_width=True) 
+
     # st.line_chart(merged_df, x="Date", y="Energy Required (MU)",use_container_width=True)
  
     columns = ['Energy Required (MU)', 'Rain', 'Tmax', 'Tmin', 'inflation', 'Day']
@@ -191,9 +193,10 @@ def main():
     df['Forecasted Demand (MU)'] = forecast_unseen_inverse[(start_date-last_date).days:(end_date-last_date).days+1]
     fig = px.bar(df, x='Date', y='Forecasted Demand (MU)')
     fig.update_layout(paper_bgcolor = '#36454F',plot_bgcolor=light_colors[np.random.randint(0, 9)])
+    fig.update_layout(margin=dict(r=25))
     # Render the chart using Streamlit
     if selected_date is not None:
-        st.plotly_chart(fig)
+        st.plotly_chart(fig ,use_container_width=True)
     with st.container():
         # Show the dataframe in Streamlit
 
