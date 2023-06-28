@@ -191,7 +191,7 @@ def main():
     df['Date'] = date_range
     df["Date"] = pd.to_datetime(df["Date"])
     df['Forecasted Demand (MU)'] = forecast_unseen_inverse[(start_date-last_date).days:(end_date-last_date).days+1]
-    fig = px.bar(df, x='Date', y='Forecasted Demand (MU)')
+    fig = px.line(df, x='Date', y='Forecasted Demand (MU)',title=f"Forecasted Demand pattern for {start_date} to {end_date}")
     fig.update_layout(paper_bgcolor = '#36454F',plot_bgcolor=light_colors[np.random.randint(0, 9)])
     fig.update_layout(margin=dict(r=25))
     # Render the chart using Streamlit
