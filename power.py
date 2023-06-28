@@ -214,6 +214,10 @@ csv = convert_df(df)
 
 
 
+if choice == "About data" :
+    st.title("Automated Exploratory Data Analysis")
+    profile_report = merged_df.profile_report()
+    st_profile_report(profile_report)
 if choice == 'Home Page' : 
 
     st.markdown("_Tips : Click on the same date twice in the calendar interface to see the prediction for single day_")
@@ -237,7 +241,4 @@ if choice == 'Home Page' :
         mime='text/csv',
 )
 
-elif choice == "About data" :
-    st.title("Automated Exploratory Data Analysis")
-    profile_report = merged_df.profile_report()
-    st_profile_report(profile_report)
+
