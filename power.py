@@ -16,8 +16,16 @@ url = "https://github.com/ashishakkumar/PowerDemandPrediction/raw/main/multivari
 filename = "multivariate_lstm.h5"
 urllib.request.urlretrieve(url, filename)
 
- 
+
+with st.sidebar : 
+    st.image('https://scontent.fmaa8-1.fna.fbcdn.net/v/t39.30808-6/277737201_348161497339226_4233154437252459558_n.png?_nc_cat=104&cb=99be929b-59f725be&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=gmhLb771LQoAX-oBWp_&_nc_ht=scontent.fmaa8-1.fna&oh=00_AfBSA8btYseH5Y7FUDLPiwgs2Ie0m_9PQ86Di1XjxZHJEA&oe=64A25406')
+    st.title("Power Demand Prediction")
+    st.info("This application allows you to predict the total power demand (in MU) of Andhra Pradesh")
+
+
 page_bg_img = f'''
+
+
 <style>
 [data-testid="stAppViewContainer"] > .main {{
 background-image: url("https://raw.githubusercontent.com/ashishakkumar/PowerDemandPrediction/main/340966496_570385771749371_2312951338874449866_n%20(1).jpg");
